@@ -1,0 +1,7 @@
+# Activating virtual environment
+> pipenv shell
+
+> pipenv install fastapi uvicorn motor(mongodb driver for asynchronous python apps)
+
+# To install from requirements.txt
+> pipenv install -r requirements.txt
