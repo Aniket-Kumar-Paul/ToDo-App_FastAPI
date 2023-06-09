@@ -11,7 +11,7 @@ from model import Todo
 
 app = FastAPI()
 
-origins = ['https://localhost:3000']
+origins = ['http://localhost:3000']
 app.add_middleware(
     CORSMiddleware,
     allow_origins = origins,
@@ -22,14 +22,14 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"Ping": "Pong"}
+    return {"Greeting": "Hello World!"}
 
 @app.get("/api/todo")
 async def get_todo():
     response = await fetch_all_todos()
     return response
 
-@app.get("/api/todo{title}", response_model=Todo)
+@app.get("/api/todo/{title}", response_model=Todo)
 async def get_todo_by_id(title):
     response = await fetch_one_todo(title)
     if response:
@@ -43,14 +43,14 @@ async def post_todo(todo: Todo):
         return response
     raise HTTPException(400, "Something went wrong")
 
-@app.put("/api/todo{title}", response_model=Todo)
+@app.put("/api/todo/{title}", response_model=Todo)
 async def put_todo(title:str, desc:str):
     response = await update_todo(title, desc)
     if response:
         return response
     raise HTTPException(404, f'There is no ToDo item with the title {title}')
 
-@app.delete("/api/todo{title}")
+@app.delete("/api/todo/{title}")
 async def delete_todo(title):
     response = await remove_todo(title)
     if response:
